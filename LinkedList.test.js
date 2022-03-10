@@ -1,7 +1,7 @@
 const LinkedList = require("./LinkedList");
 
-describe("#insertAtHead ", () => {
-  test("it adds the element tot he beginning of the list", () => {
+describe("#insertAtHead", () => {
+  test("it adds the element to the beginning of the list", () => {
     const ll = new LinkedList();
     ll.insertAtHead(10);
     const oldHead = ll.head;
@@ -38,6 +38,45 @@ describe("#getByIndex", () => {
     test("it returns the element at that index", () => {
       const ll = new LinkedList.fromValues(10, 20, 30, 40);
       expect(ll.getByIndex(2).value).toBe(30);
+    });
+  });
+});
+
+describe("#insertAtIndex", () => {
+  describe("with index less then 0", () => {
+    test("it does not insert anything", () => {
+      const ll = LinkedList.fromValues(10, 20);
+      ll.insertAtIndex(-1, 30);
+      expect(ll.length).toBe(2);
+    });
+  });
+
+  describe("with Index greater then list length", () => {
+    test("it does not insert anything", () => {
+      const ll = LinkedList.fromValues(10, 20);
+      ll.insertAtIndex(5, 30);
+      expect(ll.length).toBe(2);
+    });
+  });
+
+  describe("with Index 0", () => {
+    test("insert at the head", () => {
+      const ll = LinkedList.fromValues(10, 20);
+      ll.insertAtIndex(0, 30);
+      expect(ll.head.value).toBe(30);
+      expect(ll.head.next.value).toBe(10);
+      expect(ll.length).toBe(3);
+    });
+  });
+
+  describe("with Index in the middle", () => {
+    test("insert at the given index", () => {
+      const ll = LinkedList.fromValues(10, 20, 30, 40);
+      ll.insertAtIndex(2, 50);
+      const node = ll.getByIndex(2);
+      expect(node.value).toBe(50);
+      expect(node.next.value).toBe(30);
+      expect(ll.length).toBe(5);
     });
   });
 });
